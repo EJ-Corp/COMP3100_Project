@@ -21,7 +21,15 @@ public class MyClient {
             String str = (String)dis.readLine();
             System.out.println("mesage= " + str + "\n");
 
-            
+            String username = System.getProperty("user.name");
+            dout.write(("AUTH " + username +"\n").getBytes());
+            dout.flush();
+
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
+
+            //END OF HANDSHAKE
+
             dout.close(); //Close out output to the server (our messages)
             s.close(); //Close the connection to the server
         } catch (Exception e) {
