@@ -39,6 +39,10 @@ public class MyClient {
 		    String[] serverIDs;
             int[] serverCores;
 
+            int largestServerIdx = -1;
+            int largestServerAmount = 0;
+            int largestServerCores = 0;
+
             //Inside a loop:
             dout.write(("REDY\n").getBytes());
             dout.flush();
@@ -79,8 +83,21 @@ public class MyClient {
                 String[] splitServer = str.split(" ");
                 serverTypes[i] = splitServer[0];
                 serverIDs[i] = splitServer[1];
-                serverCores[i] = Integer.parseInt(splitServer[4]) ;
+                serverCores[i] = Integer.parseInt(splitServer[4]);
+
+                if(serverCores[i] >= largestServerIdx) {
+                    largestServerIdx = i;
+                    largestServerCores = serverCores[i];
+                }
             }
+
+            for(int i = 0; i < serverCores.length; i++) {
+                if(serverCores[i] == largestServerCores) {
+                    largestServerAmount++;
+                }
+            }
+
+            System.out.println("Largest Server: " + serverTypes[largestServerIdx] + " Cores: " + largestServerCores + " Amount of Servers: " + largestServerAmount);
 
 
             dout.close(); //Close out output to the server (our messages)
