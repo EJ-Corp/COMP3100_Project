@@ -73,19 +73,19 @@ public class MyClient {
 
             // System.out.println("BEFORE LOOP:");
 
+            dout.write(("OK\n").getBytes());
+            dout.flush();
             for(int i = 0; i < nRecs; i++) {
-                dout.write(("OK\n").getBytes());
-                dout.flush();
 
                 str = (String)dis.readLine();
-                // System.out.println("mesage= " + str + "\n");
+                System.out.println("mesage= " + str + "\n");
 
                 String[] splitServer = str.split(" ");
                 serverTypes[i] = splitServer[0];
                 serverIDs[i] = splitServer[1];
                 serverCores[i] = Integer.parseInt(splitServer[4]);
 
-                if(serverCores[i] >= largestServerIdx) {
+                if(serverCores[i] >= largestServerCores) {
                     largestServerIdx = i;
                     largestServerCores = serverCores[i];
                 }
