@@ -47,14 +47,16 @@ public class MyClient_Multiple {
 
             //Inside a loop:
             while(true) {
-                if(str.equals("NONE")) {
-                    break;
-                }
+                
                 dout.write(("REDY\n").getBytes());
                 dout.flush();
 
                 str = (String)dis.readLine();
                 System.out.println("mesage= " + str + "\n");
+
+                if(str.equals("NONE")) {
+                    break;
+                }
 
                 //Store the job Info from the message sent by the server
                 String[] splitJobInfo = str.split(" ");
@@ -65,7 +67,6 @@ public class MyClient_Multiple {
                 int jobID = Integer.parseInt(splitJobInfo[2]);
 
                 //Get largest server once
-                if(!foundLargest) {
                     //Gets all the servers
                     dout.write(("GETS All\n").getBytes());
                     dout.flush();
@@ -124,7 +125,7 @@ public class MyClient_Multiple {
                         str = (String)dis.readLine();
                         System.out.println("mesage= " + str + "\n");
                     }
-                }
+                
             }                 
 
             dout.write(("QUIT\n").getBytes());
