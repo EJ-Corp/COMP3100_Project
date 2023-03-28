@@ -71,14 +71,14 @@ public class MyClient {
             serverIDs = new String[nRecs];
             serverCores = new int[nRecs];
 
-            System.out.println("BEFORE LOOP:");
+            // System.out.println("BEFORE LOOP:");
 
             for(int i = 0; i < nRecs; i++) {
                 dout.write(("OK\n").getBytes());
                 dout.flush();
 
                 str = (String)dis.readLine();
-                System.out.println("mesage= " + str + "\n");
+                // System.out.println("mesage= " + str + "\n");
 
                 String[] splitServer = str.split(" ");
                 serverTypes[i] = splitServer[0];
@@ -99,6 +99,25 @@ public class MyClient {
 
             System.out.println("Largest Server: " + serverTypes[largestServerIdx] + " Cores: " + largestServerCores + " Amount of Servers: " + largestServerAmount);
 
+            dout.write(("OK\n").getBytes());
+            dout.flush();
+
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
+
+            if(jobName.equals("JOBN")) {
+                dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[largestServerIdx] + " \n").getBytes());
+                dout.flush();
+
+                str = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+            }
+
+            dout.write(("QUIT\n").getBytes());
+            dout.flush();
+
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
 
             dout.close(); //Close out output to the server (our messages)
             s.close(); //Close the connection to the server
