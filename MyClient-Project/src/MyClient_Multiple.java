@@ -44,6 +44,10 @@ public class MyClient_Multiple {
             int largestServerCores = 0;
 
             boolean foundLargest = false;
+            boolean storedLargest = false;
+
+            int currentServerID = 0;
+            int large = 0;
 
             //Inside a loop:
             while(true) {
@@ -110,17 +114,46 @@ public class MyClient_Multiple {
                     }
 
                     foundLargest = true;
+                    if(foundLargest & !(storedLargest)) {
+                        int[] largestServersIDs = new int[largestServerAmount];
+                        int idx = 0;
+                        for(int i = 0; i < nRecs; i++) {
+                            if(serverCores[i] == largestServerCores) {
+                                largestServersIDs[idx] = Integer.parseInt(serverIDs[i]);
+                                idx++;
+                            }
+                        }
+
+                        storedLargest = true;
+
+                        System.out.println("PRINTING IDS");
+
+                        for(int i = 0; i < largestServersIDs.length; i++) {
+                            System.out.println(largestServersIDs[i]);
+                        }
+
+                        large = largestServerAmount;
+                    }
+
                     System.out.println("Largest Server: " + serverTypes[largestServerIdx] + " Cores: " + largestServerCores + " Amount of Servers: " + largestServerAmount);
                     
+                    
+
                     dout.write(("OK\n").getBytes());
                     dout.flush();
 
                     str = (String)dis.readLine();
                     System.out.println("mesage= " + str + "\n");
 
+                    if(currentServerID >= large) {
+                        currentServerID = 0;
+                    }
+
                     if(jobName.equals("JOBN")) {
-                        dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[largestServerIdx] + " \n").getBytes());
+                        dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + " \n").getBytes());
                         dout.flush();
+
+                        currentServerID++;
         
                         str = (String)dis.readLine();
                         System.out.println("mesage= " + str + "\n");
