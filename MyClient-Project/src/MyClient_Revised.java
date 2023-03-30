@@ -91,11 +91,22 @@ public class MyClient_Revised {
                 }
             }
 
+            //Find amount of largest servers
             for(int i = 0; i < serverCores.length; i++) {
-                System.out.println("Server Type: " + serverTypes[i] + " " + "Server Cores: " + serverCores[i] + " " + "Server ID: " + serverIDs[i] + " ");
+                if(serverCores[i] == largestServerCores) {
+                    largestServerAmount++;
+                }
             }
 
+            System.out.println("Amount of largest server: " + largestServerAmount);
             
+            //Tell server We recieved all fo the servers info
+            dout.write(("OK\n").getBytes());
+            dout.flush();
+
+            //Read confimartion "."
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
 
         } catch (Exception e) {
             System.out.println(e);
