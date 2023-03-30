@@ -51,8 +51,18 @@ public class MyClient_Revised {
             dout.write(("GETS All\n").getBytes());
             dout.flush();
 
+            //Recieve DATA line to find number of servers
             str = (String)dis.readLine();
             System.out.println("mesage= " + str + "\n");
+
+            String[] dataSplit = str.split(" ");
+
+            //Store number of servers
+            int nRecs = Integer.parseInt(dataSplit[1]);
+
+            //recieve all servers info
+            dout.write(("OK\n").getBytes());
+            dout.flush();
 
         } catch (Exception e) {
             System.out.println(e);
