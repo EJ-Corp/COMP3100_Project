@@ -24,7 +24,7 @@ public class MyClient_Revised {
 
             //Get ur username and send it to the server to authenticate
             String username = System.getProperty("user.name");
-            dout.write(("AUTH " + username +" \n").getBytes());
+            dout.write(("AUTH " + username +"\n").getBytes());
             dout.flush();
 
             //Server replies with OK
@@ -114,7 +114,7 @@ public class MyClient_Revised {
 
             while(!job.equals("NONE")) {
                 if(!job1Scheduled & jobName.equals("JOBN")) {
-                dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + " \n").getBytes());
+                dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + "\n").getBytes());
                 dout.flush();
 
                 currentServerID++;
@@ -144,7 +144,7 @@ public class MyClient_Revised {
                 }
                 
                 if(jobName.equals("JOBN")) {
-                    dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + " \n").getBytes());
+                    dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + "\n").getBytes());
                     dout.flush();
 
                     currentServerID++;
