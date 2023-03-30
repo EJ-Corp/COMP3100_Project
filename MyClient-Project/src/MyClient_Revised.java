@@ -36,11 +36,11 @@ public class MyClient_Revised {
             dout.flush();
 
             //recieve the first jobn
-            str = (String)dis.readLine();
+            String job = (String)dis.readLine();
             System.out.println("mesage= " + str + "\n");
 
             //Store the job Info from the message sent by the server
-            String[] splitJobInfo = str.split(" ");
+            String[] splitJobInfo = job.split(" ");
 
             //Store the job Name
             String jobName = splitJobInfo[0];
@@ -107,6 +107,56 @@ public class MyClient_Revised {
             //Read confimartion "."
             str = (String)dis.readLine();
             System.out.println("mesage= " + str + "\n");
+
+            boolean job1Scheduled = false;
+
+            int currentServerID = 0;
+
+            while(!job.equals("NONE")) {
+                if(!job1Scheduled & jobName.equals("JOBN")) {
+                dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + " \n").getBytes());
+                dout.flush();
+
+                currentServerID++;
+        
+                str = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+                }
+
+                dout.write(("REDY\n").getBytes());
+                dout.flush();
+
+                job = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+
+                splitJobInfo = job.split(" ");
+
+                jobName = splitJobInfo[0];
+                jobID = Integer.parseInt(splitJobInfo[2]);
+
+                if(currentServerID >= largestServerAmount) {
+                    currentServerID = 0;
+                }
+                
+                if(jobName.equals("JOBN")) {
+                    dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + " \n").getBytes());
+                    dout.flush();
+
+                    currentServerID++;
+
+                    str = (String)dis.readLine();
+                    System.out.println("mesage= " + str + "\n");
+                }
+            }
+
+            dout.write(("QUIT\n").getBytes());
+            dout.flush();
+
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
+
+            dout.close(); //Close out output to the server (our messages)
+            s.close(); //Close the connection to the server
 
         } catch (Exception e) {
             System.out.println(e);
