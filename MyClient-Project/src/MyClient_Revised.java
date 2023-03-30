@@ -35,6 +35,22 @@ public class MyClient_Revised {
             dout.write(("REDY\n").getBytes());
             dout.flush();
 
+            //recieve the first jobn
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
+
+            //Store the job Info from the message sent by the server
+            String[] splitJobInfo = str.split(" ");
+
+            //Store the job Name
+            String jobName = splitJobInfo[0];
+            //Store the ID
+            int jobID = Integer.parseInt(splitJobInfo[2]);
+
+            //Gets all the servers
+            dout.write(("GETS All\n").getBytes());
+            dout.flush();
+
             str = (String)dis.readLine();
             System.out.println("mesage= " + str + "\n");
 
