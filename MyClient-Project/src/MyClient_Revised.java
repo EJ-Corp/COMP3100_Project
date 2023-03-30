@@ -91,6 +91,10 @@ public class MyClient_Revised {
                 }
             }
 
+            for(int i = 0; i < serverCores.length; i++) {
+                System.out.println("Server Type: " + serverTypes[i] + " " + "Server Cores: " + serverCores[i] + " " + "Server ID: " + serverIDs[i] + " ");
+            }
+
             
 
         } catch (Exception e) {
