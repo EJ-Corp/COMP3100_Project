@@ -64,6 +64,35 @@ public class MyClient_Revised {
             dout.write(("OK\n").getBytes());
             dout.flush();
 
+            //Prepare to store server info (Type, ID, Cores)
+            String[] serverTypes = new String[nRecs];
+            String[] serverIDs = new String[nRecs];
+            int[] serverCores = new int[nRecs];
+
+            //Store Largest Server Info
+            int largestServerCores = -1; //How many cores the largest server has
+            int largestServerIdx = -1; //The Index position of the first largest server
+            int largestServerAmount = 0; //How many of the largest server are there
+
+            //Store all of the servers info
+            for(int i = 0; i < nRecs; i++) {
+                str = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+
+                String[] splitServer = str.split(" ");
+                serverTypes[i] = splitServer[0];
+                serverIDs[i] = splitServer[1];
+                serverCores[i] = Integer.parseInt(splitServer[4]);
+
+                //Register the largest server (Core based) & the position of the first largest
+                if(serverCores[i] > largestServerCores) {
+                    largestServerIdx = i;
+                    largestServerCores = serverCores[i];
+                }
+            }
+
+            
+
         } catch (Exception e) {
             System.out.println(e);
         }
