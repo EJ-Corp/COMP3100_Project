@@ -121,6 +121,8 @@ public class MyClient_Revised {
         
                 str = (String)dis.readLine();
                 System.out.println("mesage= " + str + "\n");
+
+                job1Scheduled = true;
                 }
 
                 dout.write(("REDY\n").getBytes());
