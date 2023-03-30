@@ -134,8 +134,11 @@ public class MyClient_Revised {
                 splitJobInfo = job.split(" ");
 
                 jobName = splitJobInfo[0];
-                jobID = Integer.parseInt(splitJobInfo[2]);
 
+                if(!jobName.equals("NONE")) {
+                    jobID = Integer.parseInt(splitJobInfo[2]);
+                }
+                
                 if(currentServerID >= largestServerAmount) {
                     currentServerID = 0;
                 }
