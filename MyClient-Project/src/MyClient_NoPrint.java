@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 
 
-public class MyClient_Revised {
+public class MyClient_NoPrint {
     public static void main(String[] args) {
         try {
             //Socket to connect to the server
@@ -20,7 +20,7 @@ public class MyClient_Revised {
 
             //Read the messages from the server and print them on the console
             String str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+            //System.out.println("mesage= " + str + "\n");
 
             //Get ur username and send it to the server to authenticate
             String username = System.getProperty("user.name");
@@ -29,7 +29,7 @@ public class MyClient_Revised {
 
             //Server replies with OK
             str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+            //System.out.println("mesage= " + str + "\n");
 
             //Tell the server im ready for a job
             dout.write(("REDY\n").getBytes());
@@ -37,7 +37,7 @@ public class MyClient_Revised {
 
             //recieve the first jobn
             String job = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+            //System.out.println("mesage= " + str + "\n");
 
             //Store the job Info from the message sent by the server
             String[] splitJobInfo = job.split(" ");
@@ -53,7 +53,7 @@ public class MyClient_Revised {
 
             //Recieve DATA line to find number of servers
             str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+            //System.out.println("mesage= " + str + "\n");
 
             String[] dataSplit = str.split(" ");
 
@@ -73,13 +73,12 @@ public class MyClient_Revised {
             int largestServerCores = -1; //How many cores the largest server has
             int largestServerIdx = -1; //The Index position of the first largest server
             int largestServerAmount = 0; //How many of the largest server are there
-
-            String firstLargestServer = null;
+            String largestServerType = null;
 
             //Store all of the servers info
             for(int i = 0; i < nRecs; i++) {
                 str = (String)dis.readLine();
-                System.out.println("mesage= " + str + "\n");
+                //System.out.println("mesage= " + str + "\n");
 
                 String[] splitServer = str.split(" ");
                 serverTypes[i] = splitServer[0];
@@ -91,18 +90,18 @@ public class MyClient_Revised {
                     largestServerIdx = i;
                     largestServerCores = serverCores[i];
 
-                    firstLargestServer = serverTypes[i];
+                    largestServerType = serverTypes[i];
                 }
             }
 
             //Find amount of largest servers
             for(int i = 0; i < serverCores.length; i++) {
-                if(serverCores[i] == largestServerCores && serverTypes[i].equals(firstLargestServer)) {
+                if(serverCores[i] == largestServerCores && serverTypes[i].equals(largestServerType)) {
                     largestServerAmount++;
                 }
             }
 
-            System.out.println("Amount of largest server: " + largestServerAmount);
+            //System.out.println("Amount of largest server: " + largestServerAmount);
             
             //Tell server We recieved all fo the servers info
             dout.write(("OK\n").getBytes());
@@ -110,7 +109,7 @@ public class MyClient_Revised {
 
             //Read confimartion "."
             str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+            //System.out.println("mesage= " + str + "\n");
 
             boolean job1Scheduled = false;
 
@@ -124,7 +123,7 @@ public class MyClient_Revised {
                 currentServerID++;
         
                 str = (String)dis.readLine();
-                System.out.println("mesage= " + str + "\n");
+                //System.out.println("mesage= " + str + "\n");
 
                 job1Scheduled = true;
                 }
@@ -133,7 +132,7 @@ public class MyClient_Revised {
                 dout.flush();
 
                 job = (String)dis.readLine();
-                System.out.println("mesage= " + str + "\n");
+                //System.out.println("mesage= " + str + "\n");
 
                 splitJobInfo = job.split(" ");
 
@@ -154,7 +153,7 @@ public class MyClient_Revised {
                     currentServerID++;
 
                     str = (String)dis.readLine();
-                    System.out.println("mesage= " + str + "\n");
+                    //System.out.println("mesage= " + str + "\n");
                 }
             }
 
@@ -162,7 +161,7 @@ public class MyClient_Revised {
             dout.flush();
 
             str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+            //System.out.println("mesage= " + str + "\n");
 
             dout.close(); //Close out output to the server (our messages)
             s.close(); //Close the connection to the server
@@ -172,3 +171,4 @@ public class MyClient_Revised {
         }
     }
 }
+
