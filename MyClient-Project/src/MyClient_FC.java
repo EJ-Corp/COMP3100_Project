@@ -50,43 +50,102 @@ public class MyClient_FC {
             int jobMemory = Integer.parseInt(splitJobInfo[5]);
             int jobDisk = Integer.parseInt(splitJobInfo[6]);
 
-            //Gets all the servers capable
-            dout.write(("GETS Capable " + jobCores + " " + jobMemory + " " + jobDisk + "\n").getBytes());
-            dout.flush();
+            boolean firstJobScheduled = false;
 
-            //Recieve DATA line to find number of servers
-            str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+            while(!job.equals("NONE")) {
 
-            //recieve all servers info
-            dout.write(("OK\n").getBytes());
-            dout.flush();
+                if(!firstJobScheduled)
+                {
+                    //Gets all the servers capable
+                    dout.write(("GETS Capable " + jobCores + " " + jobMemory + " " + jobDisk + "\n").getBytes());
+                    dout.flush();
 
-            //Recieve the first capable server
-            str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+                    //Recieve DATA line to find number of servers
+                    str = (String)dis.readLine();
+                    System.out.println("mesage= " + str + "\n");
 
-            String[] splitServer = str.split(" ");
+                    //recieve all servers info
+                    dout.write(("OK\n").getBytes());
+                    dout.flush();
 
-            String serverType = splitServer[0];
-            String serverId = splitServer[1];
+                    //Recieve the first capable server
+                    str = (String)dis.readLine();
+                    System.out.println("mesage= " + str + "\n");
 
+                    String[] splitServer = str.split(" ");
 
-            //System.out.println("Amount of largest server: " + largestServerAmount);
-            
-            //Tell server We recieved all fo the servers info
-            dout.write(("OK\n").getBytes());
-            dout.flush();
+                    String serverType = splitServer[0];
+                    String serverId = splitServer[1];
 
-            //Read confimartion "."
-            str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+                    
+                    //Tell server We recieved all fo the servers info
+                    dout.write(("OK\n").getBytes());
+                    dout.flush();
 
-            dout.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
-            dout.flush();
+                    //Read confimartion "."
+                    str = (String)dis.readLine();
+                    System.out.println("mesage= " + str + "\n");
 
-            str = (String)dis.readLine();
-            System.out.println("mesage= " + str + "\n");
+                    dout.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
+                    dout.flush();
+
+                    str = (String)dis.readLine();
+                    System.out.println("mesage= " + str + "\n");
+
+                    firstJobScheduled = true;
+                }
+
+                //Tell the server im ready for a job
+                dout.write(("REDY\n").getBytes());
+                dout.flush();
+                
+                job = (String)dis.readLine();
+                System.out.println("mesage= " + job + "\n");
+
+                splitJobInfo = job.split(" ");
+                
+                jobID = Integer.parseInt(splitJobInfo[2]);
+                jobCores = Integer.parseInt(splitJobInfo[4]);
+                jobMemory = Integer.parseInt(splitJobInfo[5]);
+                jobDisk = Integer.parseInt(splitJobInfo[6]);
+
+                dout.write(("GETS Capable " + jobCores + " " + jobMemory + " " + jobDisk + "\n").getBytes());
+                dout.flush();
+
+                //Recieve DATA line to find number of servers
+                str = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+
+                //recieve all servers info
+                dout.write(("OK\n").getBytes());
+                dout.flush();
+
+                //Recieve the first capable server
+                str = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+
+                String[] splitServer = str.split(" ");
+
+                String serverType = splitServer[0];
+                String serverId = splitServer[1];
+
+                
+                //Tell server We recieved all fo the servers info
+                dout.write(("OK\n").getBytes());
+                dout.flush();
+
+                //Read confimartion "."
+                str = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+
+                dout.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
+                dout.flush();
+
+                str = (String)dis.readLine();
+                System.out.println("mesage= " + str + "\n");
+                
+            }
+           
 
             dout.write(("QUIT\n").getBytes());
             dout.flush();
