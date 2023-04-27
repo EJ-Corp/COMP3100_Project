@@ -112,12 +112,15 @@ public class MyClient_FC {
                 job = (String)dis.readLine();
                 System.out.println("mesage= " + job + "\n");
 
-                splitJobInfo = job.split(" ");
+                if(!job.equals("NONE")) {
+                    splitJobInfo = job.split(" ");
                 
-                jobID = Integer.parseInt(splitJobInfo[2]);
-                jobCores = Integer.parseInt(splitJobInfo[4]);
-                jobMemory = Integer.parseInt(splitJobInfo[5]);
-                jobDisk = Integer.parseInt(splitJobInfo[6]);
+                    jobID = Integer.parseInt(splitJobInfo[2]);
+                    jobCores = Integer.parseInt(splitJobInfo[4]);
+                    jobMemory = Integer.parseInt(splitJobInfo[5]);
+                    jobDisk = Integer.parseInt(splitJobInfo[6]);
+                }
+                
 
                 dout.write(("GETS Capable " + jobCores + " " + jobMemory + " " + jobDisk + "\n").getBytes());
                 dout.flush();
