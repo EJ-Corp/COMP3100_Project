@@ -64,6 +64,11 @@ public class MyClient_FC {
                     str = (String)dis.readLine();
                     System.out.println("mesage= " + str + "\n");
 
+                    String[] dataSplit = str.split(" ");
+
+                    //Store number of servers
+                    int nRecs = Integer.parseInt(dataSplit[1]);
+
                     //recieve all servers info
                     dout.write(("OK\n").getBytes());
                     dout.flush();
@@ -76,6 +81,11 @@ public class MyClient_FC {
 
                     String serverType = splitServer[0];
                     String serverId = splitServer[1];
+
+                    for(int i = 0; i < nRecs - 1; i++) {
+                        str = (String)dis.readLine();
+                        System.out.println("mesage= " + str + "\n");
+                    }
 
                     
                     //Tell server We recieved all fo the servers info
