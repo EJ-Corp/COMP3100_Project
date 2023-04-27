@@ -82,6 +82,12 @@ public class MyClient_FC {
             str = (String)dis.readLine();
             System.out.println("mesage= " + str + "\n");
 
+            dout.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
+            dout.flush();
+
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
+
             dout.write(("QUIT\n").getBytes());
             dout.flush();
 
