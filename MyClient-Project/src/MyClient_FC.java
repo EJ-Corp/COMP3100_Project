@@ -44,62 +44,33 @@ public class MyClient_FC {
 
             //Store the job Name
             String jobName = splitJobInfo[0];
-            //Store the ID
+            //Store the ID, cores, mem & disk
             int jobID = Integer.parseInt(splitJobInfo[2]);
+            int jobCores = Integer.parseInt(splitJobInfo[4]);
+            int jobMemory = Integer.parseInt(splitJobInfo[5]);
+            int jobDisk = Integer.parseInt(splitJobInfo[6]);
 
-            //Gets all the servers
-            dout.write(("GETS All\n").getBytes());
+            //Gets all the servers capable
+            dout.write(("GETS Capable " + jobCores + " " + jobMemory + " " + jobDisk + "\n").getBytes());
             dout.flush();
 
             //Recieve DATA line to find number of servers
             str = (String)dis.readLine();
-            //System.out.println("mesage= " + str + "\n");
-
-            String[] dataSplit = str.split(" ");
-
-            //Store number of servers
-            int nRecs = Integer.parseInt(dataSplit[1]);
+            System.out.println("mesage= " + str + "\n");
 
             //recieve all servers info
             dout.write(("OK\n").getBytes());
             dout.flush();
 
-            //Prepare to store server info (Type, ID, Cores)
-            String[] serverTypes = new String[nRecs];
-            String[] serverIDs = new String[nRecs];
-            int[] serverCores = new int[nRecs];
+            //Recieve the first capable server
+            str = (String)dis.readLine();
+            System.out.println("mesage= " + str + "\n");
 
-            //Store Largest Server Info
-            int largestServerCores = -1; //How many cores the largest server has
-            int largestServerIdx = -1; //The Index position of the first largest server
-            int largestServerAmount = 0; //How many of the largest server are there
-            String largestServerType = null;
+            String[] splitServer = str.split(" ");
 
-            //Store all of the servers info
-            for(int i = 0; i < nRecs; i++) {
-                str = (String)dis.readLine();
-                //System.out.println("mesage= " + str + "\n");
+            String serverType = splitServer[0];
+            String serverId = splitServer[1];
 
-                String[] splitServer = str.split(" ");
-                serverTypes[i] = splitServer[0];
-                serverIDs[i] = splitServer[1];
-                serverCores[i] = Integer.parseInt(splitServer[4]);
-
-                //Register the largest server (Core based) & the position of the first largest
-                if(serverCores[i] > largestServerCores) {
-                    largestServerIdx = i;
-                    largestServerCores = serverCores[i];
-
-                    largestServerType = serverTypes[i];
-                }
-            }
-
-            //Find amount of largest servers
-            for(int i = 0; i < serverCores.length; i++) {
-                if(serverCores[i] == largestServerCores && serverTypes[i].equals(largestServerType)) {
-                    largestServerAmount++;
-                }
-            }
 
             //System.out.println("Amount of largest server: " + largestServerAmount);
             
@@ -109,59 +80,13 @@ public class MyClient_FC {
 
             //Read confimartion "."
             str = (String)dis.readLine();
-            //System.out.println("mesage= " + str + "\n");
-
-            boolean job1Scheduled = false;
-
-            int currentServerID = 0;
-
-            while(!job.equals("NONE")) {
-                if(!job1Scheduled & jobName.equals("JOBN")) {
-                dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + "\n").getBytes());
-                dout.flush();
-
-                currentServerID++;
-        
-                str = (String)dis.readLine();
-                //System.out.println("mesage= " + str + "\n");
-
-                job1Scheduled = true;
-                }
-
-                dout.write(("REDY\n").getBytes());
-                dout.flush();
-
-                job = (String)dis.readLine();
-                //System.out.println("mesage= " + str + "\n");
-
-                splitJobInfo = job.split(" ");
-
-                jobName = splitJobInfo[0];
-
-                if(!jobName.equals("NONE")) {
-                    jobID = Integer.parseInt(splitJobInfo[2]);
-                }
-                
-                if(currentServerID >= largestServerAmount) {
-                    currentServerID = 0;
-                }
-                
-                if(jobName.equals("JOBN")) {
-                    dout.write(("SCHD " + jobID + " " + serverTypes[largestServerIdx] + " " + serverIDs[currentServerID] + "\n").getBytes());
-                    dout.flush();
-
-                    currentServerID++;
-
-                    str = (String)dis.readLine();
-                    //System.out.println("mesage= " + str + "\n");
-                }
-            }
+            System.out.println("mesage= " + str + "\n");
 
             dout.write(("QUIT\n").getBytes());
             dout.flush();
 
             str = (String)dis.readLine();
-            //System.out.println("mesage= " + str + "\n");
+            System.out.println("mesage= " + str + "\n");
 
             dout.close(); //Close out output to the server (our messages)
             s.close(); //Close the connection to the server
