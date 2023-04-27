@@ -54,6 +54,9 @@ public class MyClient_FC {
 
             while(!job.equals("NONE")) {
 
+                // if(job.equals("NONE")) {
+                //     break;
+                // }
                 if(!firstJobScheduled)
                 {
                     //Gets all the servers capable
@@ -112,13 +115,28 @@ public class MyClient_FC {
                 job = (String)dis.readLine();
                 System.out.println("mesage= " + job + "\n");
 
-                if(!job.equals("NONE")) {
+                if(job.equals("NONE")) {
+                    break;
+                }
+
+                splitJobInfo = job.split(" ");
+
+                jobName = splitJobInfo[0];
+
+                if(!job.equals("NONE") && jobName.equals("JOBN")) {
                     splitJobInfo = job.split(" ");
                 
                     jobID = Integer.parseInt(splitJobInfo[2]);
                     jobCores = Integer.parseInt(splitJobInfo[4]);
                     jobMemory = Integer.parseInt(splitJobInfo[5]);
                     jobDisk = Integer.parseInt(splitJobInfo[6]);
+                }
+
+                if(jobName.equals(("JCPL"))) {
+                    //Tell the server im ready for a job
+                    dout.write(("REDY\n").getBytes());
+                    dout.flush();
+                    continue;
                 }
                 
 
@@ -160,8 +178,12 @@ public class MyClient_FC {
                 str = (String)dis.readLine();
                 System.out.println("mesage= " + str + "\n");
 
-                dout.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
-                dout.flush();
+                if(jobName.equals("JOBN"))
+                {
+                    dout.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
+                    dout.flush();
+                }
+                
 
                 str = (String)dis.readLine();
                 System.out.println("mesage= " + str + "\n");
