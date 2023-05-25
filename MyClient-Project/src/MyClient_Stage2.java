@@ -74,15 +74,32 @@ public class MyClient_Stage2 {
             serverOutput = (String)serverMessages.readLine();
             System.out.println("mesage= " + serverOutput + "\n");
 
+            //Get ready to store the first capable server
             String[] splitServer = serverOutput.split(" ");
 
             String serverType = splitServer[0];
             String serverId = splitServer[1];
 
+            //Read the remaining servers
             for(int i = 0; i < nRecs - 1; i++) {
                 serverOutput = (String)serverMessages.readLine();
                 System.out.println("mesage= " + serverOutput + "\n");
             }
+
+            //Send OK to the server / recieved all fo the servers
+            clientOutput.write(("OK\n").getBytes());
+            clientOutput.flush();
+
+            //Read confirmation "."
+            serverOutput = (String)serverMessages.readLine();
+            System.out.println("mesage= " + serverOutput + "\n");
+
+            //Schedule the first job
+            clientOutput.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
+            clientOutput.flush();
+
+            serverOutput = (String)serverMessages.readLine();
+            System.out.println("mesage= " + serverOutput + "\n");
 
 
 
