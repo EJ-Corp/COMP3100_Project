@@ -98,8 +98,80 @@ public class MyClient_Stage2 {
             clientOutput.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
             clientOutput.flush();
 
+            //Recieve schedule confirmation "OK"
             serverOutput = (String)serverMessages.readLine();
             System.out.println("mesage= " + serverOutput + "\n");
+
+            while(!job.equals("NONE")) {
+                //Send "REDY" to the server to recieve the next job
+                clientOutput.write(("REDY\n").getBytes());
+                clientOutput.flush();
+
+                //Recieve the next job
+                job = (String)serverMessages.readLine();
+                System.out.println("mesage= " + serverOutput + "\n");
+
+                splitJobInfo = job.split(" ");
+                //Store the Name
+                jobName = splitJobInfo[0];
+                //Store the ID
+                jobID = Integer.parseInt(splitJobInfo[2]);
+                //Store the Cores
+                jobCores = Integer.parseInt(splitJobInfo[4]);
+                //Store the Memory
+                jobMem = Integer.parseInt(splitJobInfo[5]);
+                //Store the Disk
+                jobDisk = Integer.parseInt(splitJobInfo[6]);
+
+                 //Ask for capable server to run the job
+                clientOutput.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
+                clientOutput.flush();
+
+                //Get the DATA line
+                serverOutput = (String)serverMessages.readLine();
+                System.out.println("mesage= " + serverOutput + "\n");
+
+                //Store the DATA no of Servers
+                dataSplit = serverOutput.split(" ");
+
+                //Store servers capable of running job
+                nRecs = Integer.parseInt(dataSplit[1]);
+
+                //recieve all servers info
+                clientOutput.write(("OK\n").getBytes());
+                clientOutput.flush();
+
+                //Get the first capable server
+                serverOutput = (String)serverMessages.readLine();
+                System.out.println("mesage= " + serverOutput + "\n");
+
+                splitServer = serverOutput.split(" ");
+
+                serverType = splitServer[0];
+                serverId = splitServer[1];
+
+                //Read the remaining servers
+                for(int i = 0; i < nRecs - 1; i++) {
+                    serverOutput = (String)serverMessages.readLine();
+                    System.out.println("mesage= " + serverOutput + "\n");
+                }
+
+                //Send OK to the server / recieved all fo the servers
+                clientOutput.write(("OK\n").getBytes());
+                clientOutput.flush();
+
+                //Read confirmation "."
+                serverOutput = (String)serverMessages.readLine();
+                System.out.println("mesage= " + serverOutput + "\n");
+
+                //Schedule the first job
+                clientOutput.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
+                clientOutput.flush();
+
+                //Recieve schedule confirmation "OK"
+                serverOutput = (String)serverMessages.readLine();
+                System.out.println("mesage= " + serverOutput + "\n");
+            }
 
 
 
