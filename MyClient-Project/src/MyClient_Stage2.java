@@ -56,6 +56,17 @@ public class MyClient_Stage2 {
             clientOutput.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
             clientOutput.flush();
 
+            //Get the DATA line
+            serverOutput = (String)serverMessages.readLine();
+            System.out.println("mesage= " + serverOutput + "\n");
+
+            //Store the DATA no of Servers
+            String[] dataSplit = serverOutput.split(" ");
+
+            //Store number of servers
+            int nRecs = Integer.parseInt(dataSplit[1]);
+            System.out.println(nRecs);
+
 
 
         } catch (Exception e) {
