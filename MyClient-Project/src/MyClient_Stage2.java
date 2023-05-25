@@ -177,8 +177,16 @@ public class MyClient_Stage2 {
                 serverOutput = (String)serverMessages.readLine();
                 System.out.println("mesage= " + serverOutput + "\n");
             }
+            //Send "QUIT" to the server to close connection 
+            clientOutput.write(("OK\n").getBytes());
+            clientOutput.flush();
 
+            //Read "QUIT" confirmation
+            serverOutput = (String)serverMessages.readLine();
+            System.out.println("mesage= " + serverOutput + "\n");
 
+            clientOutput.close();
+            connection.close();
 
         } catch (Exception e) {
             System.out.println(e);
