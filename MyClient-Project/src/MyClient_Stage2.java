@@ -119,6 +119,10 @@ public class MyClient_Stage2 {
                     continue;
                 }
 
+                if(jobName.equals("NONE")) {
+                    break;
+                }
+
                 //Store the ID
                 jobID = Integer.parseInt(splitJobInfo[2]);
                 //Store the Cores
@@ -178,7 +182,7 @@ public class MyClient_Stage2 {
                 System.out.println("mesage= " + serverOutput + "\n");
             }
             //Send "QUIT" to the server to close connection 
-            clientOutput.write(("OK\n").getBytes());
+            clientOutput.write(("QUIT\n").getBytes());
             clientOutput.flush();
 
             //Read "QUIT" confirmation
