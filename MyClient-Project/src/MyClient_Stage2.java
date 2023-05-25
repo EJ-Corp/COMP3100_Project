@@ -65,7 +65,24 @@ public class MyClient_Stage2 {
 
             //Store number of servers
             int nRecs = Integer.parseInt(dataSplit[1]);
-            System.out.println(nRecs);
+            
+            //recieve all servers info
+            clientOutput.write(("OK\n").getBytes());
+            clientOutput.flush();
+
+            //Get the first capable server
+            serverOutput = (String)serverMessages.readLine();
+            System.out.println("mesage= " + serverOutput + "\n");
+
+            String[] splitServer = serverOutput.split(" ");
+
+            String serverType = splitServer[0];
+            String serverId = splitServer[1];
+
+            for(int i = 0; i < nRecs - 1; i++) {
+                serverOutput = (String)serverMessages.readLine();
+                System.out.println("mesage= " + serverOutput + "\n");
+            }
 
 
 
