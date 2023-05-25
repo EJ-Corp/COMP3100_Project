@@ -114,6 +114,11 @@ public class MyClient_Stage2 {
                 splitJobInfo = job.split(" ");
                 //Store the Name
                 jobName = splitJobInfo[0];
+
+                if(jobName.equals("JCPL")) {
+                    continue;
+                }
+
                 //Store the ID
                 jobID = Integer.parseInt(splitJobInfo[2]);
                 //Store the Cores
