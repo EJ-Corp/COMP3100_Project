@@ -52,8 +52,8 @@ public class MyClient_Stage2 {
             //Store the Disk
             int jobDisk = Integer.parseInt(splitJobInfo[6]);
 
-            //Ask for capable server to run the job
-            clientOutput.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
+            //Ask for available server to run the job
+            clientOutput.write(("GETS Avail " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
             clientOutput.flush();
 
             //Get the DATA line
@@ -133,7 +133,7 @@ public class MyClient_Stage2 {
                 jobDisk = Integer.parseInt(splitJobInfo[6]);
 
                  //Ask for capable server to run the job
-                clientOutput.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
+                clientOutput.write(("GETS Avail " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
                 clientOutput.flush();
 
                 //Get the DATA line
@@ -146,18 +146,50 @@ public class MyClient_Stage2 {
                 //Store servers capable of running job
                 nRecs = Integer.parseInt(dataSplit[1]);
 
-                //recieve all servers info
-                clientOutput.write(("OK\n").getBytes());
-                clientOutput.flush();
+                if(nRecs <= 0) {
+                    clientOutput.write(("OK\n").getBytes());
+                    clientOutput.flush();
 
-                //Get the first capable server
-                serverOutput = (String)serverMessages.readLine();
-                System.out.println("mesage= " + serverOutput + "\n");
+                    serverOutput = (String)serverMessages.readLine();
+                    System.out.println("mesage= " + serverOutput + "\n");
 
-                splitServer = serverOutput.split(" ");
+                    clientOutput.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
+                    clientOutput.flush();
 
-                serverType = splitServer[0];
-                serverId = splitServer[1];
+                    serverOutput = (String)serverMessages.readLine();
+                    System.out.println("mesage= " + serverOutput + "\n");
+
+                    dataSplit = serverOutput.split(" ");
+
+                    nRecs = Integer.parseInt(dataSplit[1]);
+
+                    clientOutput.write(("OK\n").getBytes());
+                    clientOutput.flush();
+                    
+                    //Get the first Capable server
+                    serverOutput = (String)serverMessages.readLine();
+                    System.out.println("mesage= " + serverOutput + "\n");
+
+                    splitServer = serverOutput.split(" ");
+
+                    serverType = splitServer[0];
+                    serverId = splitServer[1];
+                } else {
+                    //recieve all servers info
+                    clientOutput.write(("OK\n").getBytes());
+                    clientOutput.flush();
+
+                    //Get the first avail server
+                    serverOutput = (String)serverMessages.readLine();
+                    System.out.println("mesage= " + serverOutput + "\n");
+
+                    splitServer = serverOutput.split(" ");
+
+                    serverType = splitServer[0];
+                    serverId = splitServer[1];
+                }
+
+                
 
                 //Read the remaining servers
                 for(int i = 0; i < nRecs - 1; i++) {
@@ -173,7 +205,7 @@ public class MyClient_Stage2 {
                 serverOutput = (String)serverMessages.readLine();
                 System.out.println("mesage= " + serverOutput + "\n");
 
-                //Schedule the first job
+                //Schedule the job
                 clientOutput.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
                 clientOutput.flush();
 
