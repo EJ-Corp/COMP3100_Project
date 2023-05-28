@@ -20,7 +20,7 @@ public class MyClient_Stage2 {
 
             //Read the messages from the server and print them on the console
             String serverOutput = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             //Get ur username and send it to the server to authenticate
             String username = System.getProperty("user.name");
@@ -29,7 +29,7 @@ public class MyClient_Stage2 {
 
             //Server replies with OK
             serverOutput = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             //Send "REDY" to the server to recieve the first job
             clientOutput.write(("REDY\n").getBytes());
@@ -37,7 +37,7 @@ public class MyClient_Stage2 {
 
             //Read the message ("JOBN...subTime ... ID ... estRunTime ... Core ... Mem ... Disk") from the server and print them on the console
             String job = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             //Store the job Info from the message sent by the server
             String[] splitJobInfo = job.split(" ");
@@ -58,7 +58,7 @@ public class MyClient_Stage2 {
 
             //Get the DATA line
             serverOutput = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             //Store the DATA no of Servers
             String[] dataSplit = serverOutput.split(" ");
@@ -72,7 +72,7 @@ public class MyClient_Stage2 {
 
             //Get the first capable server
             serverOutput = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             //Get ready to store the first capable server
             String[] splitServer = serverOutput.split(" ");
@@ -83,7 +83,7 @@ public class MyClient_Stage2 {
             //Read the remaining servers
             for(int i = 0; i < nRecs - 1; i++) {
                 serverOutput = (String)serverMessages.readLine();
-                System.out.println("mesage= " + serverOutput + "\n");
+                // System.out.println("mesage= " + serverOutput + "\n");
             }
 
             //Send OK to the server / recieved all fo the servers
@@ -92,7 +92,7 @@ public class MyClient_Stage2 {
 
             //Read confirmation "."
             serverOutput = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             //Schedule the first job
             clientOutput.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
@@ -100,7 +100,7 @@ public class MyClient_Stage2 {
 
             //Recieve schedule confirmation "OK"
             serverOutput = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             while(!job.equals("NONE")) {
                 //Send "REDY" to the server to recieve the next job
@@ -109,7 +109,7 @@ public class MyClient_Stage2 {
 
                 //Recieve the next job
                 job = (String)serverMessages.readLine();
-                System.out.println("mesage= " + serverOutput + "\n");
+                // System.out.println("mesage= " + serverOutput + "\n");
 
                 splitJobInfo = job.split(" ");
                 //Store the Name
@@ -138,7 +138,7 @@ public class MyClient_Stage2 {
 
                 //Get the DATA line
                 serverOutput = (String)serverMessages.readLine();
-                System.out.println("mesage= " + serverOutput + "\n");
+                // System.out.println("mesage= " + serverOutput + "\n");
 
                 //Store the DATA no of Servers
                 dataSplit = serverOutput.split(" ");
@@ -151,13 +151,13 @@ public class MyClient_Stage2 {
                     clientOutput.flush();
 
                     serverOutput = (String)serverMessages.readLine();
-                    System.out.println("mesage= " + serverOutput + "\n");
+                    // System.out.println("mesage= " + serverOutput + "\n");
 
                     clientOutput.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk+ "\n").getBytes());
                     clientOutput.flush();
 
                     serverOutput = (String)serverMessages.readLine();
-                    System.out.println("mesage= " + serverOutput + "\n");
+                    // System.out.println("mesage= " + serverOutput + "\n");
 
                     dataSplit = serverOutput.split(" ");
 
@@ -168,7 +168,7 @@ public class MyClient_Stage2 {
                     
                     //Get the first Capable server
                     serverOutput = (String)serverMessages.readLine();
-                    System.out.println("mesage= " + serverOutput + "\n");
+                    // System.out.println("mesage= " + serverOutput + "\n");
 
                     splitServer = serverOutput.split(" ");
 
@@ -181,7 +181,7 @@ public class MyClient_Stage2 {
 
                     //Get the first avail server
                     serverOutput = (String)serverMessages.readLine();
-                    System.out.println("mesage= " + serverOutput + "\n");
+                    // System.out.println("mesage= " + serverOutput + "\n");
 
                     splitServer = serverOutput.split(" ");
 
@@ -194,7 +194,7 @@ public class MyClient_Stage2 {
                 //Read the remaining servers
                 for(int i = 0; i < nRecs - 1; i++) {
                     serverOutput = (String)serverMessages.readLine();
-                    System.out.println("mesage= " + serverOutput + "\n");
+                    // System.out.println("mesage= " + serverOutput + "\n");
                 }
 
                 //Send OK to the server / recieved all fo the servers
@@ -203,7 +203,7 @@ public class MyClient_Stage2 {
 
                 //Read confirmation "."
                 serverOutput = (String)serverMessages.readLine();
-                System.out.println("mesage= " + serverOutput + "\n");
+                // System.out.println("mesage= " + serverOutput + "\n");
 
                 //Schedule the job
                 clientOutput.write(("SCHD " + jobID + " " + serverType + " " + serverId+ "\n").getBytes());
@@ -211,7 +211,7 @@ public class MyClient_Stage2 {
 
                 //Recieve schedule confirmation "OK"
                 serverOutput = (String)serverMessages.readLine();
-                System.out.println("mesage= " + serverOutput + "\n");
+                // System.out.println("mesage= " + serverOutput + "\n");
             }
             //Send "QUIT" to the server to close connection 
             clientOutput.write(("QUIT\n").getBytes());
@@ -219,7 +219,7 @@ public class MyClient_Stage2 {
 
             //Read "QUIT" confirmation
             serverOutput = (String)serverMessages.readLine();
-            System.out.println("mesage= " + serverOutput + "\n");
+            // System.out.println("mesage= " + serverOutput + "\n");
 
             clientOutput.close();
             connection.close();
