@@ -46,8 +46,16 @@ public class Client {
             //Store the ID
             int jobID = Integer.parseInt(splitJobInfo[2]);
 
+            
+            //Store the Cores
+            int jobCores = Integer.parseInt(splitJobInfo[4]);
+            //Store the Memory
+            int jobMem = Integer.parseInt(splitJobInfo[5]);
+            //Store the Disk
+            int jobDisk = Integer.parseInt(splitJobInfo[6]);
+
             //Gets all the servers
-            dout.write(("GETS All\n").getBytes());
+            dout.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk + "\n").getBytes());
             dout.flush();
 
             //Recieve DATA line to find number of servers
@@ -139,6 +147,15 @@ public class Client {
 
                 if(!jobName.equals("NONE")) {
                     jobID = Integer.parseInt(splitJobInfo[2]);
+
+                    jobCores = Integer.parseInt(splitJobInfo[4]);
+                    //Store the Memory
+                    jobMem = Integer.parseInt(splitJobInfo[5]);
+                    //Store the Disk
+                    jobDisk = Integer.parseInt(splitJobInfo[6]);
+
+                    dout.write(("GETS Capable " + jobCores + " " + jobMem + " " + jobDisk + "\n").getBytes());
+                    dout.flush();
                 }
                 
                 if(currentServerID >= largestServerAmount) {
