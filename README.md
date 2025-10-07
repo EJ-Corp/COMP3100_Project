@@ -3,7 +3,7 @@
 By: Edgar Murga Garcia De Leon  
 SID: 47094133
 
-** Project Overview **
+**Project Overview**
 
 This project implements a client-side job dispatcher simulator that communicates with the ds-sim server-side simulator (ds-server) using the ds-sim simulation protocol. The simulator handles job reception, scheduling, and dispatching, with a focus on designing and evaluating scheduling algorithms for distributed systems.
 
@@ -35,11 +35,11 @@ Created and used additional configurations to demonstrate algorithm performance 
 
 This stage showcased the ability to design and justify an optimization-based scheduling strategy while maintaining flexibility and adaptability across various system configurations.
 
-** Outcome **
+**Outcome**
 
 The completed client simulator successfully implements multiple scheduling algorithms, including LRR and an optimized custom scheduler that reduces average turnaround time without excessive resource overhead. The project demonstrates strong understanding of distributed job scheduling, performance evaluation, and trade-off analysis between conflicting system objectives.
 
-** Notes: **
+**Notes:**
 
 Project was completed using java and a Linux-based OS.
 
